@@ -2,14 +2,14 @@
 
 ### How to use
 
-// build 
-
 ```shell
+  // build 
+  
   php callisto -b
 ```
 
-// start
-
 ```shell
-php callisto -s -o
+  // start
+  
+  php callisto -s -o
 ```
