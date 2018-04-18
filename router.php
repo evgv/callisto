@@ -14,14 +14,21 @@ define('APPLICATION_ENV', 'development');
 //   include_once 'index.php';
 // }
 
+// define('PATH', dirname(__FILE__) . '/' );
+
+$uri = rtrim($_SERVER["REQUEST_URI"], '/');
+
 if (
-  preg_match('/\.(?:html)$/', $_SERVER["REQUEST_URI"]) && 
-  file_exists(__DIR__ . '/public' . $_SERVER['REQUEST_URI'])
+  (
+    preg_match('/\.(?:html)$/', $uri) && 
+    file_exists(__DIR__ . '/public' . $uri)
+  ) ||
+  file_exists(__DIR__ . '/public' . $uri)
 ) {
-  echo file_get_contents('public' . $_SERVER['REQUEST_URI']);
+  echo file_get_contents('public' . $uri);
 } else if (
-  preg_match('/\.(?:png|jpg|jpeg|gif|ico)$/', $_SERVER['REQUEST_URI']) ||
-  file_exists(__DIR__ . '/' . $_SERVER['REQUEST_URI'])
+  preg_match('/\.(?:png|jpg|jpeg|gif|ico)$/', $uri) ||
+  file_exists(__DIR__ . $uri)
 ) {
   return false;
 } else {
