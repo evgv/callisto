@@ -1,5 +1,15 @@
-# Callisto
+# Callisto (DEMO)
 
 ### How to use
 
-`php callisto`
+// build 
+
+```shell
+  php callisto -b
+```
+
+// start
+
+```shell
+php callisto -s -o
+```
