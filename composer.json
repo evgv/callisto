@@ -1,0 +1,38 @@
+{
+    "name": "callisto/callisto",
+    "description": "Callisto is a simple, blog-aware, static site generator perfect for personal, project, or organization sites.",
+    "keywords": [],
+    "homepage": "http://github.com/evgv/callisto",
+    "type": "static site generator",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Eugene Zubkov",
+            "email": "evgvzubkoff@gmail.com",
+            "homepage": "https://evgv.io"
+        }
+    ],
+
+    "require": {
+        "php": "^7.0",
+        "twig/twig": "^2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6",
+        "monolog/monolog": "1.0.*"
+    },
+
+    "autoload": {
+        "psr-4": {"Callisto\\": "src/Callisto"}
+    },
+    "autoload-dev": {
+        "psr-4": {"Callisto\\": "tests/Callisto"}
+    },
+
+    "scripts": {
+        "test": [
+            "parallel-lint . --exclude vendor",
+            "phpunit"
+        ]
+    }
+}

@@ -1,0 +1,63 @@
+#!/usr/bin/php
+
+<?php
+
+
+try {
+
+    // only router.php if cli-server
+    // if (php_sapi_name() == 'cli-server') {
+            
+    //     $info = parse_url($_SERVER['REQUEST_URI']);
+
+    //     if (file_exists( "./$info[path]")) {
+    //         return false;
+    //     } else {
+    //         include_once "index.php";
+    //         return true;
+    //     }
+    // }
+
+    if (PHP_OS != 'Linux') {
+        throw new Exception('This script supports only Linux');
+    }
+    
+    $result = '';
+
+    $options = getopt('sob', array('serve', 'open', 'build'));
+
+    var_dump($options);
+
+    if (isset($options['b']) || isset($options['build'])) {
+        require_once 'vendor/autoload.php';
+    
+        $loader = new Twig_Loader_Filesystem('/');
+        $twig   = new Twig_Environment($loader);
+    
+        file_put_contents('public/index.html', $twig->render('index.html', array('title' => 'Callisto', 'keywords' => '', 'description' => '')), LOCK_EX);  
+        file_put_contents('public/about.html', $twig->render('about.html', array('title' => 'About', 'keywords' => '', 'description' => '')), LOCK_EX);  
+        return false;
+    }
+      
+    
+    $ip   = '127.0.0.1';
+    $port = '8080';
+
+    $command = sprintf('php -S %s:%s router.php', $ip, $port);
+    // $command = sprintf('php -S %s:%s public/index.html', $ip, $port);
+
+    if (isset($options['o']) || isset($options['open'])) {
+        $command = $command . sprintf(' & xdg-open "http://%s:%s/"', $ip, $port);
+    }
+
+    if (isset($options['s']) || isset($options['serve'])) {
+        system(
+            $command,
+            $result
+        );
+    }
+
+
+} catch (Exception $e) {
+    echo "\n Error: ". $e->getMessage() . "\n";
+}
