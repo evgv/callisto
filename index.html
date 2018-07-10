@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
   {% include 'head.html' %}
 
   <body>
 
+    <script>
+        (function redirect() {
+            if (document && document.location) {
+                document.location.replace(`/?redirect=${encodeURIComponent(document.location.pathname)}`);
+            }
+        }());
+    </script>
 
     <!-- Primary Page Layout –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <div class="section">

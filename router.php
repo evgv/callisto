@@ -15,20 +15,29 @@ define('APPLICATION_ENV', 'development');
 // }
 
 // define('PATH', dirname(__FILE__) . '/' );
+header('Framework: Callisto');
 
 $uri = rtrim($_SERVER["REQUEST_URI"], '/');
+
+// echo $uri;
 
 if (
   (
     preg_match('/\.(?:html)$/', $uri) && 
     file_exists(__DIR__ . '/public' . $uri)
   ) ||
-  file_exists(__DIR__ . '/public' . $uri)
+  (
+    file_exists(__DIR__ . '/public' . $uri) &&
+    is_file(__DIR__ . '/public' . $uri)
+  )
 ) {
   echo file_get_contents('public' . $uri);
 } else if (
   preg_match('/\.(?:png|jpg|jpeg|gif|ico)$/', $uri) ||
-  file_exists(__DIR__ . $uri)
+  (
+    file_exists(__DIR__ . $uri) && 
+    is_file(__DIR__ . $uri)
+  )
 ) {
   return false;
 } else {

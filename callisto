@@ -40,14 +40,24 @@ try {
     
         file_put_contents('public/index.html', $twig->render('index.html', array('title' => 'Callisto', 'keywords' => '', 'description' => '')), LOCK_EX);  
         file_put_contents('public/about.html', $twig->render('about.html', array('title' => 'About', 'keywords' => '', 'description' => '')), LOCK_EX);  
+        file_put_contents('public/404.html', $twig->render('404.html', array('title' => '404', 'keywords' => '', 'description' => '')), LOCK_EX);  
+
+        echo "public/index.html\n";
+        echo "public/about.html\n";
+        echo "public/404.html\n";
+        echo "\n";
+
         return false;
     }
       
     
     $ip   = '127.0.0.1';
     $port = '8080';
-
+    
     $command = sprintf('php -S %s:%s router.php', $ip, $port);
+
+    printf ("\n Server started at http://%s:%s \n", $ip, $port);
+
     // $command = sprintf('php -S %s:%s public/index.html', $ip, $port);
 
     if (isset($options['o']) || isset($options['open'])) {
