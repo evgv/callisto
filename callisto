@@ -18,8 +18,19 @@ try {
     //     }
     // }
 
-    if (PHP_OS != 'Linux') {
-        throw new Exception('This script supports only Linux');
+    /**
+     * Checking OS
+     */
+
+    if (PHP_OS !== 'Linux') {
+        throw new Exception("Callisto supports only Linux");
+    }
+
+    /**
+     * Checking PHP version
+     */
+    if (version_compare(phpversion(), '7.0.0', '<') === true) {
+        throw new Exception("Whoops, it looks like you have an invalid PHP version. Callisto supports PHP 7.0.0 or newer.");
     }
     
     $result = '';
@@ -33,20 +44,50 @@ try {
     }
 
     if (isset($options['b']) || isset($options['build'])) {
+
         require_once 'vendor/autoload.php';
-    
+
+        function rrmdir($path){
+            if (is_dir($path)) {
+                array_map( "rrmdir", glob($path . DIRECTORY_SEPARATOR . '{,.[!.]}*', GLOB_BRACE) );
+                @rmdir($path);
+            }
+            else {
+                @unlink($path);
+            }
+        }
+
+        $dir = "public";
+
+        rrmdir($dir);
+        mkdir($dir);
+
         $loader = new Twig_Loader_Filesystem('/');
         $twig   = new Twig_Environment($loader);
-    
-        file_put_contents('public/index.html', $twig->render('index.html', array('title' => 'Callisto', 'keywords' => '', 'description' => '')), LOCK_EX);  
-        file_put_contents('public/about.html', $twig->render('about.html', array('title' => 'About', 'keywords' => '', 'description' => '')), LOCK_EX);  
-        file_put_contents('public/404.html', $twig->render('404.html', array('title' => '404', 'keywords' => '', 'description' => '')), LOCK_EX);  
 
-        echo "public/index.html\n";
-        echo "public/about.html\n";
-        echo "public/404.html\n";
-        echo "\n";
+        $files = [
+                "index.html" => [
+                    "title"         => "Callisto",
+                    "keywords"      => "",
+                    "description"   => ""
+                ],
+                "about.html" => [
+                    "title"         => "About",
+                    "keywords"      => "",
+                    "description"   => ""
+                ],
+                "404.html" => [
+                    "title"         => "404",
+                    "keywords"      => "",
+                    "description"   => ""
+                ],
+        ];
 
+        foreach ($files as $file => $data) {
+            file_put_contents("public/" . $file, $twig->render($file, $data), LOCK_EX);
+        }
+
+        echo PHP_EOL;
         return false;
     }
       
