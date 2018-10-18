@@ -4,6 +4,11 @@ Callisto is a simple static site generator.
 
 ### How to use
 
+###### info
+```shell  
+  php callisto -i
+```
+
 ###### build
 ```shell  
   php callisto -b
@@ -11,5 +16,5 @@ Callisto is a simple static site generator.
 
 ###### start
 ```shell  
-  php callisto -s -o
+  php callisto -so
 ```
