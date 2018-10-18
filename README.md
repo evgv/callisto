@@ -1,6 +1,6 @@
 # Callisto (DEMO)
 
-Callisto is a simple, static site generator. 
+Callisto is a simple static site generator. 
 
 ### How to use
 
